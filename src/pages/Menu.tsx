@@ -169,7 +169,7 @@ export default function Menu() {
                         {item.image && (
                           <div className="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 bg-muted rounded-lg overflow-hidden">
                             <img 
-                              src={`/images/menu/${item.image}`}
+                              src={`${import.meta.env.BASE_URL}images/menu/${item.image}`}
                               alt={item.name}
                               className="w-full h-full object-cover"
                               onError={(e) => {
