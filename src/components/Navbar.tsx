@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,11 +21,22 @@ export const Navbar = () => {
   // Determine if we're on a page other than home
   const isHomePage = location.pathname === "/";
 
+  const handleHashNavigation = (hash: string) => {
+    if (isHomePage) {
+      // If on home page, just scroll to section
+      const element = document.querySelector(hash);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to home page with hash
+      navigate(`/${hash}`);
+    }
+  };
+
   const navLinks = [
-    { href: "/menu", label: "Full Menu" },
-    { href: "/#about", label: "About" },
-    { href: "/#location", label: "Location" },
-    { href: "/allergies", label: "Allergies" },
+    { href: "/menu", label: "Full Menu", isRoute: true },
+    { href: "#about", label: "About", isRoute: false },
+    { href: "#location", label: "Location", isRoute: false },
+    { href: "/allergies", label: "Allergies", isRoute: true },
   ];
 
   return (
@@ -55,15 +67,7 @@ export const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                link.href.startsWith('#') || link.href.startsWith('/#') ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="text-foreground hover:text-primary font-medium transition-smooth"
-                  >
-                    {link.label}
-                  </a>
-                ) : (
+                link.isRoute ? (
                   <Link
                     key={link.href}
                     to={link.href}
@@ -71,6 +75,14 @@ export const Navbar = () => {
                   >
                     {link.label}
                   </Link>
+                ) : (
+                  <button
+                    key={link.href}
+                    onClick={() => handleHashNavigation(link.href)}
+                    className="text-foreground hover:text-primary font-medium transition-smooth"
+                  >
+                    {link.label}
+                  </button>
                 )
               ))}
               <Button 
@@ -107,19 +119,7 @@ export const Navbar = () => {
           >
             <div className="flex flex-col items-center justify-center h-full gap-8 px-4">
               {navLinks.map((link, index) => (
-                link.href.startsWith('#') || link.href.startsWith('/#') ? (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    className="text-2xl font-display font-semibold text-foreground hover:text-primary transition-smooth"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    {link.label}
-                  </motion.a>
-                ) : (
+                link.isRoute ? (
                   <motion.div
                     key={link.href}
                     initial={{ opacity: 0, y: 20 }}
@@ -134,6 +134,20 @@ export const Navbar = () => {
                       {link.label}
                     </Link>
                   </motion.div>
+                ) : (
+                  <motion.button
+                    key={link.href}
+                    onClick={() => {
+                      handleHashNavigation(link.href);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="text-2xl font-display font-semibold text-foreground hover:text-primary transition-smooth"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {link.label}
+                  </motion.button>
                 )
               ))}
               <motion.div
