@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/oki-poke-website-15/" : "/",
+  base: mode === "production" ? "/oki-poke-website/" : "/",
   server: {
     host: "::",
     port: 8080,
