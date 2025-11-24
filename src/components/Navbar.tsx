@@ -22,8 +22,8 @@ export const Navbar = () => {
 
   const navLinks = [
     { href: "/menu", label: "Full Menu" },
-    { href: isHomePage ? "#about" : "/#about", label: "About" },
-    { href: isHomePage ? "#location" : "/#location", label: "Location" },
+    { href: "/#about", label: "About" },
+    { href: "/#location", label: "Location" },
     { href: "/allergies", label: "Allergies" },
   ];
 
