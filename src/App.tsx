@@ -15,7 +15,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/oki-poke-website">
+      <BrowserRouter basename={import.meta.env.MODE === 'production' ? '/oki-poke-website' : '/'}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/menu" element={<Menu />} />
