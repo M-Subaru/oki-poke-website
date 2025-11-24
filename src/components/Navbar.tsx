@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,25 +42,36 @@ export const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <motion.a 
-              href="/"
-              className="font-display text-3xl font-bold text-gradient-primary"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              Oki Poke
-            </motion.a>
+            <Link to="/">
+              <motion.div
+                className="font-display text-3xl font-bold text-gradient-primary"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                Oki Poke
+              </motion.div>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-foreground hover:text-primary font-medium transition-smooth"
-                >
-                  {link.label}
-                </a>
+                link.href.startsWith('#') || link.href.startsWith('/#') ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-foreground hover:text-primary font-medium transition-smooth"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="text-foreground hover:text-primary font-medium transition-smooth"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
               <Button 
                 className="bg-primary hover:bg-primary-light text-white rounded-full px-6 transition-smooth shadow-soft hover:shadow-medium"
@@ -96,17 +107,34 @@ export const Navbar = () => {
           >
             <div className="flex flex-col items-center justify-center h-full gap-8 px-4">
               {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  className="text-2xl font-display font-semibold text-foreground hover:text-primary transition-smooth"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {link.label}
-                </motion.a>
+                link.href.startsWith('#') || link.href.startsWith('/#') ? (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    className="text-2xl font-display font-semibold text-foreground hover:text-primary transition-smooth"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {link.label}
+                  </motion.a>
+                ) : (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      to={link.href}
+                      className="text-2xl font-display font-semibold text-foreground hover:text-primary transition-smooth"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                )
               ))}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
