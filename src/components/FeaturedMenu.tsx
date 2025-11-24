@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import californiaPokeBowl from "@/assets/california-poke-bowl.jpg";
 import okiBowl from "@/assets/oki-bowl.jpg";
 import grandSlamBowl from "@/assets/grand-slam-poke-bowl.jpg";
@@ -106,9 +107,9 @@ export const FeaturedMenu = () => {
             className="bg-primary hover:bg-primary-light text-primary-foreground font-bold rounded-full px-10 py-6 text-lg transition-bounce hover:scale-105 shadow-glow"
             asChild
           >
-            <a href="/menu">
+            <Link to="/menu">
               View Full Menu & Order
-            </a>
+            </Link>
           </Button>
         </motion.div>
       </div>
