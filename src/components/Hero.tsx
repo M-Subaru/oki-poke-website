@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-poke-bowl.jpg";
 
 export const Hero = () => {
@@ -88,7 +89,7 @@ export const Hero = () => {
               className="bg-primary hover:bg-primary-light text-primary-foreground font-bold text-lg px-10 py-6 rounded-full shadow-glow transition-bounce hover:scale-105"
               asChild
             >
-              <a href="/menu">View Full Menu & Order</a>
+              <Link to="/menu">View Full Menu & Order</Link>
             </Button>
             <Button 
               size="lg"
