@@ -1,4 +1,5 @@
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -44,12 +45,12 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="/menu" 
+                <Link 
+                  to="/menu" 
                   className="text-muted-foreground hover:text-primary transition-smooth"
                 >
                   Full Menu
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
